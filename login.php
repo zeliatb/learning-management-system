@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Create session and redirect to dashboard
             $_SESSION['student_id'] = $row['sid'];
             $_SESSION['firstname'] = $row['firstname'];
+            $_SESSION['email'] = $row['email'];
             $_SESSION['loggedin'] = true;
             header("Location: dashboard.php");
             exit;
@@ -36,4 +37,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 }
+
 ?>
