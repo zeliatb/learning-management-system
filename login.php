@@ -18,6 +18,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
 
+        // Verify email
+        if ($row['email_verified'] == 0) {
+            echo "<script>alert('Please verify your email before logging in.'); window.location='verify_email.php';</script>";
+            exit;
+        }
+
+        // Check if user is active
+        if ($row['active'] == 0) {
+            echo "<script>alert('Account suspended. Contact admin.'); window.location='login.html';</script>";
+            exit;
+        }
+
         // Verify password
         if (password_verify($password, $row['password'])) {
             // Create session and redirect to dashboard
@@ -37,5 +49,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 }
-
 ?>
