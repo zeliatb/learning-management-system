@@ -5,7 +5,7 @@ $email = $_POST['email'];
 $newToken = random_int(100000, 999999);
 
 // Update verification status in database
-$sql = "UPDATE students SET token='$newToken' WHERE email='$email'";
+$sql = "UPDATE users SET token='$newToken' WHERE email='$email'";
 
 // Send verification email
 if ($conn->query($sql)) {
