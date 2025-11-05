@@ -2,13 +2,10 @@
 session_start();
 
 //Redirect to login page if not logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['role'] !== 'student') {
     header("Location: login.html");
     exit;
 }
-
-// Extract first name and email
-$firstname = htmlspecialchars($_SESSION['firstname']);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +14,7 @@ $firstname = htmlspecialchars($_SESSION['firstname']);
     <meta charset="UTF-8">
     <title>NovaLMS Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/dashboard0.css">
+    <link rel="stylesheet" href="assets/css/dashboard-1.css">
 </head>
 <body>
     <header class="top-nav">
@@ -38,6 +35,7 @@ $firstname = htmlspecialchars($_SESSION['firstname']);
                 <li class="nav-item" onclick="toggleSection('dashboard')">🏠 Dashboard</li>
                 <li class="nav-item" onclick="toggleSection('courses')">📚 Courses</li>
                 <li class="nav-item" onclick="toggleSection('assignments')">📝 Assignments</li>
+                <li class="nav-item" onclick="window.location.href='fee-payment.php'">💳 Fee Payment</li>
                 <li class="nav-item" onclick="toggleSection('labs')">🧪 Tech Labs</li>
                 <li class="nav-item" onclick="toggleSection('career')">🎯 Career Tracks</li>
                 <li class="nav-item" onclick="toggleSection('progress')">📊 Progress</li>
@@ -47,7 +45,7 @@ $firstname = htmlspecialchars($_SESSION['firstname']);
 
         <main class="content">
             <section id="dashboard" class="dashboard-section">
-                <h2>Welcome back, <?php echo $firstname; ?> 👋</h2>
+                <h2>Welcome back, <?php echo $_SESSION['fullname']; ?> 👋</h2>
                 <div class="cards">
                     <div class="card" onclick="toggleSection('courses')">
                         <h3>Explore New Tracks</h3>
@@ -145,7 +143,7 @@ $firstname = htmlspecialchars($_SESSION['firstname']);
                             <td>Web Development</td>
                             <td>Responsive Layout Project</td>
                             <td>Oct 18</td>
-                            <td><span class="status pending">Pending</span></td>
+                            <td><span class="status submitted">Submitted</span></td>
                         </tr>
                         <tr>
                             <td>Data Science</td>
@@ -156,8 +154,8 @@ $firstname = htmlspecialchars($_SESSION['firstname']);
                         <tr>
                             <td>Cloud Computing</td>
                             <td>AWS CLI Lab</td>
-                            <td>Oct 21</td>
-                            <td><span class="status pending">Pending</span></td>
+                            <td>Oct 23</td>
+                            <td><span class="status submitted">Submitted</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -280,7 +278,7 @@ $firstname = htmlspecialchars($_SESSION['firstname']);
 
             <section id="profile" class="dashboard-section hidden">
                 <h2>Your Profile</h2>
-                <p><strong>Name:</strong> <?php echo $firstname; ?></p>
+                <p><strong>Name:</strong> <?php echo $fullname; ?></p>
                 <img src="assets/img/default-profile.png" alt="Profile Picture" width="200">
             </section>
         </main>
